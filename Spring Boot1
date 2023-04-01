@@ -1,0 +1,78 @@
+//nameController
+
+package com.example.demo;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.service.nameService;
+
+@RestController
+@RequestMapping("/names")
+public class nameController{
+	
+	
+private final nameService nameService;
+
+@Autowired
+public nameController(nameService nameService){
+this.nameService = nameService;
+}
+
+@GetMapping
+public List<String>getNames(){
+return nameService.getNames();
+}
+
+
+@PostMapping
+public void addName(@RequestBody String name){
+nameService.addName(name);
+}
+}
+
+//nameService
+
+package com.example.demo.service;
+
+
+
+import java.util.*;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class nameService{
+private static List<String> names = new ArrayList<>();
+public List<String>getNames(){
+return names;
+}
+public void addName(String name){
+names.add(name);
+}
+}
+
+
+//DemoApplication
+
+
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+}
